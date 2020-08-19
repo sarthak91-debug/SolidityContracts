@@ -1,0 +1,29 @@
+pragma solidity  ^0.4.21;
+contract Car{
+    struct buyer{
+        uint id;
+        uint budget;
+        string carmodel;
+
+    }
+    address owner;
+    uint nextid=0;
+    function Car()public payable{
+        owner ==msg.sender;
+    }
+    /*modifier onlyowner(){
+        require(msg.sender==owner);
+        _;
+    }
+    */
+    mapping(address=>buyer)public Buyer;
+    function add(uint _budget,string _carmodel)public {
+        nextid++;
+        Buyer[msg.sender] = buyer(nextid,_budget,_carmodel);
+    }
+    function taxation(uint _tax)public  {
+        if(Buyer[msg.sender].budget<=1000) return;
+        Buyer[msg.sender].budget+= _tax;
+    }
+    
+}
